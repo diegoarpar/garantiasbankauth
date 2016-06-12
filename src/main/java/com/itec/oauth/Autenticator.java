@@ -6,25 +6,28 @@
 package com.itec.oauth;
 
 import com.google.common.base.Optional;
-import com.itec.db.DBFactoryMongo;
-import com.itec.db.DBFactoryToken;
+import com.itec.db.FactoryMongo;
 import com.itec.pojo.Token;
 import com.itec.pojo.User;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
+
 /**
  *
  * @author iTech-Pc
  */
 public class Autenticator implements Authenticator<String, User>{
-    DBFactoryMongo f = new DBFactoryMongo();
+    FactoryMongo fm = new FactoryMongo();
+    HashMap<String, String> criterial = new HashMap<>();
+    Token t = new Token();
     @Override
     public Optional<User> authenticate(String token) throws AuthenticationException {
-        
-        Token t = new Token();
         t.setToken(token);
-       if (f.isValidToken(t)) {
+        criterial.clear();
+        criterial.put("token",token);
+       if (fm.isValidToken(criterial)) {
             Response.status(Response.Status.ACCEPTED);
             return Optional.of(new User("diego",t,"123"));
         }else{

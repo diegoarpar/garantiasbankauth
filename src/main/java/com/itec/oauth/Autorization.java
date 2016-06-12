@@ -5,9 +5,7 @@
  */
 package com.itec.oauth;
 
-import com.itec.db.DBFactoryMongo;
-import com.itec.db.DBFactoryToken;
-import com.itec.db.DBFactoryUser;
+import com.itec.db.FactoryMongo;
 import com.itec.pojo.Token;
 import com.itec.pojo.User;
 import io.dropwizard.auth.Authorizer;
@@ -19,17 +17,17 @@ import java.util.UUID;
  * @author iTech-Pc
  */
 public class Autorization implements Authorizer<User> {
-   DBFactoryMongo f = new DBFactoryMongo();
+   FactoryMongo f = new FactoryMongo();
 
     @Override
     public boolean authorize(User u, String role) {
          String token = UUID.randomUUID().toString();
          Token t = new Token();
          t.setToken(token);
-         if((u=f.isValidUser(u))!=null){
+         /*if((u=f.isValidUser(u))!=null){
              f.insertToken(t, u);
              return true;
-         }
+         }*/
         return false;
     }
 }

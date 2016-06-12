@@ -6,7 +6,7 @@
 package com.itec.autentication;
 
 import com.itec.configuration.ConfigurationExample;
-import com.itec.services.DBTest;
+import com.itec.services.Services;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 import java.util.EnumSet;
@@ -20,7 +20,10 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
  */
 public class autentication extends  Application<ConfigurationExample>{
      public static void main (String[] args)  throws Exception{
-        new autentication().run(args);
+         if(args.length > 0) new autentication().run(args);
+         else {
+             new autentication().run(new String[] { "server","./src/main/java/com/itec/autentication/config.yml" });
+         }
     }
     
 
@@ -34,7 +37,7 @@ public class autentication extends  Application<ConfigurationExample>{
                                     filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
                                     filter.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "Origin, Content-Type, Accept, Authorization, Date");
                                     filter.setInitParameter(CrossOriginFilter.ALLOW_CREDENTIALS_PARAM, "true");
-        final DBTest db = new DBTest();
+        final Services db = new Services();
         e.jersey().register(db);
         
         
