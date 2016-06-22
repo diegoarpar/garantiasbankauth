@@ -113,7 +113,7 @@ public class Services {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/getUsers")
-    @PermitAll
+
     public String insertUser(@Context HttpServletRequest req) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));

@@ -1,4 +1,8 @@
 template: Hello, %s!
+databaseuser: certiusers
+databasepass: certi123
+databasename: usersdb
+databasurlserver: localhost
 
 defaultName: ${DW_DEFAULT_NAME:-Stranger}
 

@@ -7,6 +7,7 @@ package com.itec.db;
 
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
+import com.itec.configuration.ConfigurationExample;
 import com.mongodb.*;
 
 import java.io.UnsupportedEncodingException;
@@ -63,45 +64,49 @@ public class FactoryMongo {
         return database.getCollection(name);
     }
 
+    public DBCollection getCollection(String collection){
+        return getCollection(collection, ConfigurationExample.DATABASE_USER,ConfigurationExample.DATABASE_PASS,ConfigurationExample.DATABASE_SERVER_URL,ConfigurationExample.DATABASE_NAME);
+    }
+
     public void insertUser(User c) {
-        dbP.insertUser(getCollection(COLLECTION_USER, USER_PASS_USERS.split(":")[0], USER_PASS_USERS.split(":")[1], URL_USERS, DATA_BASE_USERS), curs, mongoClient, c);
+        dbP.insertUser(getCollection(COLLECTION_USER), curs, mongoClient, c);
     }
     public void insertUser(String c) {
-        dbP.insert(getCollection(COLLECTION_USER, USER_PASS_USERS.split(":")[0], USER_PASS_USERS.split(":")[1], URL_USERS, DATA_BASE_USERS), curs, mongoClient, c);
+        dbP.insert(getCollection(COLLECTION_USER), curs, mongoClient, c);
     }
     public void updateUser(String c) {
-        dbP.updateUser(getCollection(COLLECTION_USER, USER_PASS_USERS.split(":")[0], USER_PASS_USERS.split(":")[1], URL_USERS, DATA_BASE_USERS), curs, mongoClient, c);
+        dbP.updateUser(getCollection(COLLECTION_USER), curs, mongoClient, c);
     }
 
     public List<DBObject> getUser(HashMap c) {
-        return dbP.getCriterial(getCollection(COLLECTION_USER, USER_PASS_USERS.split(":")[0], USER_PASS_USERS.split(":")[1], URL_USERS, DATA_BASE_USERS), curs, mongoClient, c);
+        return dbP.getCriterial(getCollection(COLLECTION_USER), curs, mongoClient, c);
     }
 
     public void insertToken(Token c) {
-        dbP.insertToken(getCollection(COLLECTION_TOKEN, USER_PASS_USERS.split(":")[0], USER_PASS_USERS.split(":")[1], URL_USERS, DATA_BASE_USERS), curs, mongoClient, c);
+        dbP.insertToken(getCollection(COLLECTION_TOKEN), curs, mongoClient, c);
     }
     public void getToken(HashMap c) {
-        dbP.getCriterial(getCollection(COLLECTION_TOKEN, USER_PASS_USERS.split(":")[0], USER_PASS_USERS.split(":")[1], URL_USERS, DATA_BASE_USERS), curs, mongoClient, c);
+        dbP.getCriterial(getCollection(COLLECTION_TOKEN), curs, mongoClient, c);
     }
 
     public Boolean isValidToken(HashMap c){
-        return dbP.getCriterial(getCollection(COLLECTION_TOKEN, USER_PASS_USERS.split(":")[0], USER_PASS_USERS.split(":")[1], URL_USERS, DATA_BASE_USERS), curs, mongoClient, c).size()>0;
+        return dbP.getCriterial(getCollection(COLLECTION_TOKEN), curs, mongoClient, c).size()>0;
     }
     public Boolean isValidUser(HashMap c){
-        return dbP.getCriterial(getCollection(COLLECTION_USER, USER_PASS_USERS.split(":")[0], USER_PASS_USERS.split(":")[1], URL_USERS, DATA_BASE_USERS), curs, mongoClient, c).size()>0;
+        return dbP.getCriterial(getCollection(COLLECTION_USER), curs, mongoClient, c).size()>0;
     }
     public List<DBObject> getPermission(HashMap c) {
-        return dbP.getCriterial(getCollection(COLLECTION_PERMISSION, USER_PASS_USERS.split(":")[0], USER_PASS_USERS.split(":")[1], URL_USERS, DATA_BASE_USERS), curs, mongoClient, c);
+        return dbP.getCriterial(getCollection(COLLECTION_PERMISSION), curs, mongoClient, c);
     }
 
     public List<DBObject> getRoles(HashMap c) {
-        return dbP.getCriterial(getCollection(COLLECTION_ROLE, USER_PASS_USERS.split(":")[0], USER_PASS_USERS.split(":")[1], URL_USERS, DATA_BASE_USERS), curs, mongoClient, c);
+        return dbP.getCriterial(getCollection(COLLECTION_ROLE), curs, mongoClient, c);
     }
     public List<DBObject> getUsers(HashMap c) {
-        return dbP.getCriterial(getCollection(COLLECTION_USER, USER_PASS_USERS.split(":")[0], USER_PASS_USERS.split(":")[1], URL_USERS, DATA_BASE_USERS), curs, mongoClient, c);
+        return dbP.getCriterial(getCollection(COLLECTION_USER), curs, mongoClient, c);
     }
     public String insertPermission(String c) {
-        return dbP.insert(getCollection(COLLECTION_PERMISSION, USER_PASS_USERS.split(":")[0], USER_PASS_USERS.split(":")[1], URL_USERS, DATA_BASE_USERS), curs, mongoClient, c);
+        return dbP.insert(getCollection(COLLECTION_PERMISSION), curs, mongoClient, c);
     }
 
     public String hash256(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
