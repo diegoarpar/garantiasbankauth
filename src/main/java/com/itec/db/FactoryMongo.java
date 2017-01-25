@@ -109,6 +109,9 @@ public class FactoryMongo {
         return dbP.insert(getCollection(COLLECTION_PERMISSION), curs, mongoClient, c);
     }
 
+    public String getTenant(HashMap c) {
+        return dbP.getTenant(getCollection(COLLECTION_PERMISSION), curs, mongoClient, c);
+    }
     public String hash256(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         return Hashing.sha256()
                 .hashString(password, Charsets.UTF_8)

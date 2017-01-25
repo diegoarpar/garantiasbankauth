@@ -134,6 +134,16 @@ public class Services {
         return fm.isValidToken(criterial);
 
     }
+    @GET
+    @Produces("application/json")
+    @Path("/tenant")
+    public String tenant(@Context HttpServletRequest req) throws NoSuchAlgorithmException {
+        criterial.clear();
+        criterial.put("url",req.getServerName());
+        fm.getTenant(criterial);
+        return "tenantid";
+
+    }
     private void fillCriterialFromString( String queryString){
         criterial.clear();
         if(queryString!=null)
