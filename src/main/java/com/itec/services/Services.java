@@ -8,6 +8,7 @@ import com.itec.db.FactoryMongo;
 import com.itec.pojo.Token;
 import com.itec.pojo.User;
 import com.mongodb.DBObject;
+import org.eclipse.jetty.server.Request;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -137,12 +138,10 @@ public class Services {
     @GET
     @Produces("application/json")
     @Path("/tenant")
-    public String tenant(@Context HttpServletRequest req) throws NoSuchAlgorithmException {
+    public List<DBObject> tenant(@Context HttpServletRequest req) throws NoSuchAlgorithmException {
         criterial.clear();
-        criterial.put("url",req.getServerName());
-        fm.getTenant(criterial);
-        return "tenantid";
-
+        criterial.put("origin",((Request) req).getHttpFields().get("origin"));
+        return fm.getTenant(criterial);
     }
     private void fillCriterialFromString( String queryString){
         criterial.clear();

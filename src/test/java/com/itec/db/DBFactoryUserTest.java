@@ -48,7 +48,7 @@ public class DBFactoryUserTest {
     //@Test
     public void testGetCollection() {
         System.out.println("getCollection");
-        DBFactoryUser instance = new DBFactoryUser();
+        //DBFactoryUser instance = new DBFactoryUser();
         DBCollection expResult = null;
         //DBCollection result = instance.getCollection();
        // assertEquals(expResult, result);
@@ -62,7 +62,7 @@ public class DBFactoryUserTest {
     //@Test
     public void testGetUser() {
         System.out.println("getUser");
-        DBFactoryUser instance = new DBFactoryUser();
+        //DBFactoryUser instance = new DBFactoryUser();
         List<User> expResult = null;
         //List<User> result = instance.getUser();
         //assertEquals(expResult, result);
@@ -80,7 +80,7 @@ public class DBFactoryUserTest {
         u.setUser("diego");
         u.setPassword("diego");
         
-        DBFactoryUser instance = new DBFactoryUser();
+        //DBFactoryUser instance = new DBFactoryUser();
         String expResult = "";
         //String result = instance.insertUser(u);
         //assertEquals(expResult, result);
@@ -99,7 +99,7 @@ public class DBFactoryUserTest {
         User ui = new User();
         ui.setUser("diego");
         ui.setPassword("00e48a815525529ba9d33f8761a167588fe00c47bc82f515cf791c482ed99ecc");
-        DBFactoryUser instance = new DBFactoryUser();
+        //DBFactoryUser instance = new DBFactoryUser();
         Boolean expResult = null;
         //Boolean result = instance.isValidUser(ui);
         //assertEquals(expResult, result);
@@ -116,8 +116,8 @@ public class DBFactoryUserTest {
         System.out.println("hash256");
         String password = "";
         byte[] expResult = null;
-        byte[] result = DBFactoryUser.hash256(password);
-        assertArrayEquals(expResult, result);
+        //byte[] result = DBFactoryUser.hash256(password);
+        //assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

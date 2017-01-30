@@ -25,6 +25,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
  */
 public class FactoryMongo {
     private static final String COLLECTION_TOKEN = "token";
+    private static final String COLLECTION_TENANT = "tenant";
     private static final String COLLECTION_USER = "users";
     private static final String COLLECTION_ROLE = "role";
     private static final String COLLECTION_PERMISSION = "permission";
@@ -109,8 +110,8 @@ public class FactoryMongo {
         return dbP.insert(getCollection(COLLECTION_PERMISSION), curs, mongoClient, c);
     }
 
-    public String getTenant(HashMap c) {
-        return dbP.getTenant(getCollection(COLLECTION_PERMISSION), curs, mongoClient, c);
+    public List<DBObject> getTenant(HashMap c) {
+        return dbP.getCriterial(getCollection(COLLECTION_TENANT), curs, mongoClient, c);
     }
     public String hash256(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         return Hashing.sha256()
