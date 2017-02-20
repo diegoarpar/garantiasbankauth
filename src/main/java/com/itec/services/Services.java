@@ -45,30 +45,29 @@ public class Services {
                 System.out.println(fm.hash256(password));
                 p.setNombreCompleto(fullName);
                 if(password2.equals("DIEGOPADILLAFIRMA")){
-                    fm.insertUser(p);
+                    //fm.insertUser(p);
                      return  "FIRMANDOOK";
                 }
         return  "FIRMANDO";
     }
-    //String token = UUID.randomUUID().toString();
     @GET
     @Produces("application/json")
     @Path("/getToken")
-    public Token getToken(@QueryParam("user") String user, @QueryParam("password") String password) throws NoSuchAlgorithmException {
+    public Token getToken(@QueryParam("user") String user, @QueryParam("password") String password,@QueryParam("tenant") String tenant) throws NoSuchAlgorithmException {
         Token t = new Token();
+        User u = new User ();
         String token = UUID.randomUUID().toString();
         criterial.clear();
         criterial.put("pass",password);
         criterial.put("user",user);
-        User u = new User ();
+        criterial.put("tenant",tenant);
         if(fm.isValidUser(criterial)){
             DBObject obj=fm.getUser(criterial).get(0);
-            u.setUser(obj.get("user").toString());
-            u.setToken(token);
-            u.setNombreCompleto(obj.get("completeName").toString());
+            criterial.put("token",token);
             t.setUser(u);
             t.setToken(token);
-            fm.insertToken(t);
+            u.setUser(user);
+            fm.insertToken(criterial);
             return t;
         }
          t=null;
@@ -94,7 +93,7 @@ public class Services {
             stringBuilder.append(read);
         }
         br.close();
-        fm.insertPermission(stringBuilder.toString());
+        //fm.insertPermission(stringBuilder.toString());
         return  "FIRMANDO";
     }
     @GET
@@ -106,9 +105,9 @@ public class Services {
     }
     @GET
     @Produces("application/json")
-    @Path("/getUsers")
-    public List<DBObject> getUsers() throws NoSuchAlgorithmException {
-        criterial.clear();
+    @Path("/getUsersByToken")
+    public List<DBObject> getUsers(@Context HttpServletRequest req) throws NoSuchAlgorithmException {
+        fillCriterialFromString(req.getQueryString());
         return fm.getUsers(criterial);
     }
     @POST
@@ -123,15 +122,14 @@ public class Services {
             stringBuilder.append(read);
         }
         br.close();
-        fm.insertUser(stringBuilder.toString());
+        //fm.insertUser(stringBuilder.toString());
         return  "FIRMANDO";
     }
     @GET
     @Produces("application/json")
     @Path("/isValidToken")
-    public Boolean isValidToken(@QueryParam("token") String token) throws NoSuchAlgorithmException {
-        criterial.clear();
-        criterial.put("token",token);
+    public Boolean isValidToken(@Context HttpServletRequest req) throws NoSuchAlgorithmException {
+        fillCriterialFromString(req.getQueryString());
         return fm.isValidToken(criterial);
 
     }

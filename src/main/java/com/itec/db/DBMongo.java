@@ -54,7 +54,6 @@ public class DBMongo {
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
             searchQuery2.append(pair.getKey().toString(),pair.getValue()!=null?pair.getValue().toString().equals("null")?null:pair.getValue().toString().equals("true")?true:pair.getValue().toString():null);
-            it.remove();
         }
         curs=collection.find(searchQuery2);
 
@@ -66,13 +65,16 @@ public class DBMongo {
     }
 
 
-    public String insert(DBCollection collection,DBCursor curs,MongoClient mongoClient, String c){
 
-        BasicDBObject object = (BasicDBObject) JSON.parse(c);
-        collection.insert(object);
+    public void insertCiterial(DBCollection collection,DBCursor curs,MongoClient mongoClient, HashMap criterial){
 
-        return "Insertado";
+        BasicDBObject searchQuery2  = new BasicDBObject();
+        Iterator it = criterial.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            searchQuery2.append(pair.getKey().toString(),pair.getValue()!=null?pair.getValue().toString().equals("null")?null:pair.getValue().toString().equals("true")?true:pair.getValue().toString():null);
+        }
+        collection.insert(searchQuery2);
+
     }
-
-
 }
