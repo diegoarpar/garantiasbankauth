@@ -62,6 +62,7 @@ public class Services {
         criterial.put("user",user);
         criterial.put("tenant",tenant);
         if(fm.isValidUser(criterial)){
+            criterial.put("tenant",tenant);
             DBObject obj=fm.getUser(criterial).get(0);
             criterial.put("token",token);
             t.setUser(u);
