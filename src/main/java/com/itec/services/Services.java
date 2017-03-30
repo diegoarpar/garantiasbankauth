@@ -65,9 +65,11 @@ public class Services {
             criterial.put("tenant",tenant);
             DBObject obj=fm.getUser(criterial).get(0);
             criterial.put("token",token);
+            criterial.remove("pass");
             t.setUser(u);
             t.setToken(token);
             u.setUser(user);
+            criterial.put("tenant",tenant);
             fm.insertToken(criterial);
             return t;
         }
@@ -104,12 +106,16 @@ public class Services {
         criterial.clear();
         return fm.getRoles(criterial);
     }
+
     @GET
     @Produces("application/json")
     @Path("/getUsersByToken")
     public List<DBObject> getUsers(@Context HttpServletRequest req) throws NoSuchAlgorithmException {
         fillCriterialFromString(req.getQueryString());
-        return fm.getUsers(criterial);
+        if(req.getHeader("Authorization").split(",").length>1) {
+            criterial.put("tenant", req.getHeader("Authorization").split(",")[1]);
+        }
+        return fm.getUsersByToken(criterial);
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

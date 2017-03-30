@@ -97,7 +97,9 @@ public class FactoryMongo {
     public List<DBObject> getUsers(HashMap c) {
         return dbP.getCriterial(getCollection(COLLECTION_USER,c), curs, mongoClient, c);
     }
-
+    public List<DBObject> getUsersByToken(HashMap c) {
+        return dbP.getCriterial(getCollection(COLLECTION_TOKEN,c), curs, mongoClient, c);
+    }
     public List<DBObject> getTenant(HashMap c) {
         return dbP.getCriterial(getCollection(COLLECTION_TENANT,c), curs, mongoClient, c);
     }
