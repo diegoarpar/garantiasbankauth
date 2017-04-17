@@ -7,6 +7,7 @@ package com.itec.services;
 import com.itec.db.FactoryMongo;
 import com.itec.pojo.Token;
 import com.itec.pojo.User;
+import com.itec.util.UTILS;
 import com.mongodb.DBObject;
 import org.eclipse.jetty.server.Request;
 
@@ -29,7 +30,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author iTech-Pc
  */
-@Path("/insert-database")
+@Path("/autentication/users")
 @Produces(MediaType.APPLICATION_JSON)
 public class Services {
     FactoryMongo fm = new FactoryMongo();
@@ -37,7 +38,7 @@ public class Services {
 
     @POST
     @Produces("application/json")
-    @Path("/insertUser")
+    @Path("/users")
     public String insertUser(@QueryParam("name") String name, @QueryParam("password") String password, @QueryParam("fullName") String fullName,@QueryParam("password2") String password2 ) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         User p = new User();
                 p.setUser(name);
@@ -111,15 +112,13 @@ public class Services {
     @Produces("application/json")
     @Path("/getUsersByToken")
     public List<DBObject> getUsers(@Context HttpServletRequest req) throws NoSuchAlgorithmException {
-        fillCriterialFromString(req.getQueryString());
-        if(req.getHeader("Authorization").split(",").length>1) {
-            criterial.put("tenant", req.getHeader("Authorization").split(",")[1]);
-        }
+        criterial=UTILS.fillCriterialFromString(req.getQueryString(),criterial);
+
         return fm.getUsersByToken(criterial);
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/getUsers")
+    @Path("/users")
 
     public String insertUser(@Context HttpServletRequest req) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
@@ -136,26 +135,10 @@ public class Services {
     @Produces("application/json")
     @Path("/isValidToken")
     public Boolean isValidToken(@Context HttpServletRequest req) throws NoSuchAlgorithmException {
-        fillCriterialFromString(req.getQueryString());
+        UTILS.fillCriterialFromString(req.getQueryString(),criterial);
         return fm.isValidToken(criterial);
 
     }
-    @GET
-    @Produces("application/json")
-    @Path("/tenant")
-    public List<DBObject> tenant(@Context HttpServletRequest req) throws NoSuchAlgorithmException {
-        criterial.clear();
-        criterial.put("origin",((Request) req).getHttpFields().get("origin"));
-        return fm.getTenant(criterial);
-    }
-    private void fillCriterialFromString( String queryString){
-        criterial.clear();
-        if(queryString!=null)
-            for (String split : queryString.split("&")) {
-                if (split.split("=").length == 2) {
-                    criterial.put(split.split("=")[0], split.split("=")[1]);
-                }
-            }
 
-    }
+
 }

@@ -6,7 +6,7 @@
 package com.itec.autentication;
 
 import com.itec.configuration.ConfigurationExample;
-import com.itec.services.Services;
+import com.itec.services.*;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 import java.util.EnumSet;
@@ -38,8 +38,16 @@ public class autentication extends  Application<ConfigurationExample>{
                                     filter.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "Origin, Content-Type, Accept, Authorization, Date");
                                     filter.setInitParameter(CrossOriginFilter.ALLOW_CREDENTIALS_PARAM, "true");
         final Services db = new Services();
+        final ServicesPermissions p = new ServicesPermissions();
+        final ServicesTenant te = new ServicesTenant();
+        final ServicesToken k = new ServicesToken();
+        final ServicesUsers u = new ServicesUsers();
         e.jersey().register(db);
-        
+        e.jersey().register(te);
+        e.jersey().register(k);
+        e.jersey().register(u);
+        e.jersey().register(p);
+
         
 
         

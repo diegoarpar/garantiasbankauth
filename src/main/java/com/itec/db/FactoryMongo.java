@@ -8,6 +8,7 @@ package com.itec.db;
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 import com.itec.configuration.ConfigurationExample;
+import com.itec.util.UTILS;
 import com.mongodb.*;
 
 import java.io.UnsupportedEncodingException;
@@ -24,14 +25,8 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
  * @author iTech-Pc
  */
 public class FactoryMongo {
-    private static final String COLLECTION_TOKEN = "token";
-    private static final String COLLECTION_TENANT = "tenant";
-    private static final String COLLECTION_USER = "users";
-    private static final String COLLECTION_ROLE = "role";
-    private static final String COLLECTION_PERMISSION = "permission";
-    private static final String USER_PASS_USERS = "certiusers:certi123";
-    private static final String URL_USERS = "localhost";
-    private static final String DATA_BASE_USERS = "usersdb";
+
+
     private MongoClient mongoClient = null;
     private DB database = null;
     private DBCursor curs;
@@ -75,44 +70,42 @@ public class FactoryMongo {
     }
 
     public List<DBObject> getUser(HashMap c) {
-        return dbP.getCriterial(getCollection(COLLECTION_USER,c), curs, mongoClient, c);
+        return dbP.getCriterial(getCollection(UTILS.COLLECTION_USER,c), curs, mongoClient, c);
     }
 
     public Boolean isValidToken(HashMap c){
-        return dbP.getCriterial(getCollection(COLLECTION_TOKEN,c), curs, mongoClient, c).size()>0;
+        return dbP.get(getCollection(UTILS.COLLECTION_TOKEN,c), curs, mongoClient, c).size()>0;
     }
     public void insertToken(HashMap c){
-         dbP.insertCiterial(getCollection(COLLECTION_TOKEN,c), curs, mongoClient, c);
+         dbP.insertCiterial(getCollection(UTILS.COLLECTION_TOKEN,c), curs, mongoClient, c);
     }
     public Boolean isValidUser(HashMap c){
-        return dbP.getCriterial(getCollection(COLLECTION_USER,c), curs, mongoClient, c).size()>0;
+        return dbP.getCriterial(getCollection(UTILS.COLLECTION_USER,c), curs, mongoClient, c).size()>0;
     }
     public List<DBObject> getPermission(HashMap c) {
-        return dbP.getCriterial(getCollection(COLLECTION_PERMISSION,c), curs, mongoClient, c);
+        return dbP.getCriterial(getCollection(UTILS.COLLECTION_PERMISSION,c), curs, mongoClient, c);
     }
 
     public List<DBObject> getRoles(HashMap c) {
-        return dbP.getCriterial(getCollection(COLLECTION_ROLE,c), curs, mongoClient, c);
+        return dbP.getCriterial(getCollection(UTILS.COLLECTION_ROLE,c), curs, mongoClient, c);
     }
     public List<DBObject> getUsers(HashMap c) {
-        return dbP.getCriterial(getCollection(COLLECTION_USER,c), curs, mongoClient, c);
+        return dbP.getCriterial(getCollection(UTILS.COLLECTION_USER,c), curs, mongoClient, c);
     }
     public List<DBObject> getUsersByToken(HashMap c) {
-        return dbP.getCriterial(getCollection(COLLECTION_TOKEN,c), curs, mongoClient, c);
+        return dbP.getCriterial(getCollection(UTILS.COLLECTION_TOKEN,c), curs, mongoClient, c);
     }
     public List<DBObject> getTenant(HashMap c) {
-        return dbP.getCriterial(getCollection(COLLECTION_TENANT,c), curs, mongoClient, c);
+        return dbP.get(getCollection(UTILS.COLLECTION_TENANT,c), curs, mongoClient, c);
+    }
+    public List<DBObject> getAll(HashMap c, String collection) {
+        return dbP.getAll(getCollection(collection,c), curs, mongoClient, c);
     }
     public String hash256(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         return Hashing.sha256()
                 .hashString(password, Charsets.UTF_8)
                 .toString();
     }
-    public static byte[] hash256D(String password) throws NoSuchAlgorithmException {
-        MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-        byte[] passBytes = password.getBytes();
-        byte[] passHash = sha256.digest(passBytes);
-        return passHash;
-    }
+
 
 }
