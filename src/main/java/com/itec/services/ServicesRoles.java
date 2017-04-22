@@ -65,7 +65,7 @@ public class ServicesRoles {
     }
     @PUT
     @Produces("application/json")
-    @PermitAll
+    @RolesAllowed("ADMIN")
     public String update(@Context HttpServletRequest req) throws IOException  {
         postString=UTILS.fillStringFromRequestPost(req);
         criterialList=UTILS.fillCriterialListFromDBOBject((BasicDBList) JSON.parse(postString.toString()),criterial, criterialList);
@@ -77,7 +77,7 @@ public class ServicesRoles {
     }
     @DELETE
     @Produces("application/json")
-    @PermitAll
+    @RolesAllowed("ADMIN")
     public String delete(@Context HttpServletRequest req,@PathParam("id") String id)throws IOException   {
         postString=UTILS.fillStringFromRequestPost(req);
         return  "FIRMANDO";

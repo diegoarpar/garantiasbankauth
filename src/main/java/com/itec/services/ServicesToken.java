@@ -8,6 +8,7 @@ import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -42,6 +43,7 @@ public class ServicesToken {
 
     @POST
     @Produces("application/json")
+    @RolesAllowed("ADMIN")
     public String insert(@Context HttpServletRequest req) throws IOException {
         postString= UTILS.fillStringFromRequestPost(req);
         criterialList=UTILS.fillCriterialListFromDBOBject((BasicDBList) JSON.parse(postString.toString()),criterial, criterialList);
@@ -53,6 +55,7 @@ public class ServicesToken {
     }
     @PUT
     @Produces("application/json")
+    @RolesAllowed("ADMIN")
     public String update(@Context HttpServletRequest req) throws IOException  {
         postString=UTILS.fillStringFromRequestPost(req);
         criterialList=UTILS.fillCriterialListFromDBOBject((BasicDBList) JSON.parse(postString.toString()),criterial, criterialList);
@@ -64,6 +67,7 @@ public class ServicesToken {
     }
     @DELETE
     @Produces("application/json")
+    @RolesAllowed("ADMIN")
     public String delete(@Context HttpServletRequest req,@PathParam("id") String id)throws IOException   {
         postString=UTILS.fillStringFromRequestPost(req);
         return  "FIRMANDO";

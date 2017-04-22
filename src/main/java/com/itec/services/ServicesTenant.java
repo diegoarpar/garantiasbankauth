@@ -8,6 +8,8 @@ import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import org.eclipse.jetty.server.Request;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -31,6 +33,7 @@ public class ServicesTenant {
 
     @GET
     @Produces("application/json")
+    @PermitAll
     public List<DBObject> get(@Context HttpServletRequest req)  {
         criterial.clear();
         criterial.put("origin", new BasicDBObject().append("origin",((Request) req).getHttpFields().get("origin")));
@@ -39,6 +42,7 @@ public class ServicesTenant {
 
     @POST
     @Produces("application/json")
+    @RolesAllowed("ADMIN")
     public String insert(@Context HttpServletRequest req) throws IOException {
         postString= UTILS.fillStringFromRequestPost(req);
         criterialList=UTILS.fillCriterialListFromDBOBject((BasicDBList) JSON.parse(postString.toString()),criterial, criterialList);
@@ -50,6 +54,7 @@ public class ServicesTenant {
     }
     @PUT
     @Produces("application/json")
+    @RolesAllowed("ADMIN")
     public String update(@Context HttpServletRequest req) throws IOException  {
         postString=UTILS.fillStringFromRequestPost(req);
         criterialList=UTILS.fillCriterialListFromDBOBject((BasicDBList) JSON.parse(postString.toString()),criterial, criterialList);
@@ -61,6 +66,7 @@ public class ServicesTenant {
     }
     @DELETE
     @Produces("application/json")
+    @RolesAllowed("ADMIN")
     public String delete(@Context HttpServletRequest req,@PathParam("id") String id)throws IOException   {
         postString=UTILS.fillStringFromRequestPost(req);
         return  "FIRMANDO";

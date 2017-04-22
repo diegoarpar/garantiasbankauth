@@ -34,6 +34,14 @@ public class User implements Principal{
         
     }
 
+    public String getAutoization() {
+        return autoization;
+    }
+
+    public void setAutoization(String autoization) {
+        this.autoization = autoization;
+    }
+
     public String getUser() {
         return user;
     }
