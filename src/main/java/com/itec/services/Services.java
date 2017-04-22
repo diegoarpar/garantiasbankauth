@@ -62,16 +62,16 @@ public class Services {
         criterial.put("pass",password);
         criterial.put("user",user);
         criterial.put("tenant",tenant);
-        if(fm.isValidUser(criterial)){
+        if(fm.get(criterial,UTILS.COLLECTION_USER).size()>0){
             criterial.put("tenant",tenant);
-            DBObject obj=fm.getUser(criterial).get(0);
+            DBObject obj=fm.get(criterial,UTILS.COLLECTION_USER).get(0);
             criterial.put("token",token);
             criterial.remove("pass");
             t.setUser(u);
             t.setToken(token);
             u.setUser(user);
             criterial.put("tenant",tenant);
-            fm.insertToken(criterial);
+            fm.insert(criterial,UTILS.COLLECTION_TOKEN);
             return t;
         }
          t=null;
@@ -83,7 +83,7 @@ public class Services {
     public List<DBObject> getPermission(@QueryParam("user") String user) throws NoSuchAlgorithmException {
         criterial.clear();
         criterial.put("user",user);
-        return fm.getPermission(criterial);
+        return fm.get(criterial,UTILS.COLLECTION_PERMISSION);
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -105,7 +105,7 @@ public class Services {
     @Path("/getRoles")
     public List<DBObject> getRoles() throws NoSuchAlgorithmException {
         criterial.clear();
-        return fm.getRoles(criterial);
+        return fm.get(criterial,UTILS.COLLECTION_ROLE);
     }
 
     @GET
@@ -114,7 +114,7 @@ public class Services {
     public List<DBObject> getUsers(@Context HttpServletRequest req) throws NoSuchAlgorithmException {
         criterial=UTILS.fillCriterialFromString(req.getQueryString(),criterial);
 
-        return fm.getUsersByToken(criterial);
+        return fm.get(criterial,UTILS.COLLECTION_TOKEN);
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -131,14 +131,7 @@ public class Services {
         //fm.insertUser(stringBuilder.toString());
         return  "FIRMANDO";
     }
-    @GET
-    @Produces("application/json")
-    @Path("/isValidToken")
-    public Boolean isValidToken(@Context HttpServletRequest req) throws NoSuchAlgorithmException {
-        UTILS.fillCriterialFromString(req.getQueryString(),criterial);
-        return fm.isValidToken(criterial);
 
-    }
 
 
 }

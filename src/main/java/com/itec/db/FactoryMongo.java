@@ -69,37 +69,14 @@ public class FactoryMongo {
         return getCollection(collection, ConfigurationExample.DATABASE_USER,ConfigurationExample.DATABASE_PASS,ConfigurationExample.DATABASE_SERVER_URL,ConfigurationExample.DATABASE_NAME);
     }
 
-    public List<DBObject> getUser(HashMap c) {
-        return dbP.getCriterial(getCollection(UTILS.COLLECTION_USER,c), curs, mongoClient, c);
-    }
-
-    public Boolean isValidToken(HashMap c){
-        return dbP.get(getCollection(UTILS.COLLECTION_TOKEN,c), curs, mongoClient, c).size()>0;
-    }
-    public void insertToken(HashMap c){
-         dbP.insertCiterial(getCollection(UTILS.COLLECTION_TOKEN,c), curs, mongoClient, c);
-    }
-    public Boolean isValidUser(HashMap c){
-        return dbP.getCriterial(getCollection(UTILS.COLLECTION_USER,c), curs, mongoClient, c).size()>0;
-    }
-    public List<DBObject> getPermission(HashMap c) {
-        return dbP.getCriterial(getCollection(UTILS.COLLECTION_PERMISSION,c), curs, mongoClient, c);
-    }
-
-    public List<DBObject> getRoles(HashMap c) {
-        return dbP.getCriterial(getCollection(UTILS.COLLECTION_ROLE,c), curs, mongoClient, c);
-    }
-    public List<DBObject> getUsers(HashMap c) {
-        return dbP.getCriterial(getCollection(UTILS.COLLECTION_USER,c), curs, mongoClient, c);
-    }
-    public List<DBObject> getUsersByToken(HashMap c) {
-        return dbP.getCriterial(getCollection(UTILS.COLLECTION_TOKEN,c), curs, mongoClient, c);
-    }
-    public List<DBObject> getTenant(HashMap c) {
-        return dbP.get(getCollection(UTILS.COLLECTION_TENANT,c), curs, mongoClient, c);
+    public void insert(HashMap c, String collection) {
+        dbP.insert(getCollection(collection,c), curs, mongoClient, c);
     }
     public List<DBObject> getAll(HashMap c, String collection) {
         return dbP.getAll(getCollection(collection,c), curs, mongoClient, c);
+    }
+    public List<DBObject> get(HashMap c, String collection) {
+        return dbP.get(getCollection(collection,c), curs, mongoClient, c);
     }
     public String hash256(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         return Hashing.sha256()

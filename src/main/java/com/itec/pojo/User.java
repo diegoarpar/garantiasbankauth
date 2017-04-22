@@ -21,11 +21,13 @@ public class User implements Principal{
     private String token;
     @JsonProperty
     private String nombreCompleto;
+    @JsonProperty
+    private String autoization;
 
-    public User(String user, Token t, String password) {
+    public User(String user, String autoization, String password) {
         this.user=user;
         this.password=password;
-        this.token=t.getToken();
+        this.autoization=autoization;
     }
 
     public User() {

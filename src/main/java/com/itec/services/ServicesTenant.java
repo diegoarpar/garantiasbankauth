@@ -34,7 +34,7 @@ public class ServicesTenant {
     public List<DBObject> get(@Context HttpServletRequest req)  {
         criterial.clear();
         criterial.put("origin", new BasicDBObject().append("origin",((Request) req).getHttpFields().get("origin")));
-        return f.getTenant(criterial);
+        return f.get(criterial,UTILS.COLLECTION_TOKEN);
     }
 
     @POST

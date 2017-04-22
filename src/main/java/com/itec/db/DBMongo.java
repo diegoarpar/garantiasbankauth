@@ -84,8 +84,6 @@ public class DBMongo {
         Iterator it = criterial.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-
-            //searchQuery2.append(pair.getKey().toString(),pair.getValue()!=null?pair.getValue().toString().equals("null")?null:pair.getValue().toString().equals("true")?true:pair.getValue().toString():null);
             searchQuery2=(BasicDBObject)JSON.parse(pair.getValue().toString());
         }
 

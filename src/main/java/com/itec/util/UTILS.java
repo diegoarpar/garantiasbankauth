@@ -22,7 +22,7 @@ public class UTILS {
     public static final String COLLECTION_TOKEN = "token";
     public static final String COLLECTION_TENANT = "tenant";
     public static final String COLLECTION_USER = "users";
-    public static final String COLLECTION_ROLE = "role";
+    public static final String COLLECTION_ROLE = "roles";
     public static final String COLLECTION_PERMISSION = "permission";
 
     public static byte[] hash256D(String password) throws NoSuchAlgorithmException {
@@ -70,7 +70,19 @@ public class UTILS {
         }
         return  criterial;
     }
-
+    public static HashMap getToken(HttpServletRequest request,HashMap criterial){
+        String token="";
+        try {
+            if (request.getHeader("Authorization").split(",").length > 1) {
+                token = request.getHeader("Authorization").split(",")[0];
+                token=token.replace("Bearer ","");
+            }
+            criterial.put("token", token);
+        }catch (Exception e){
+            System.out.println("Don't know token in authorization parameter...");
+        }
+        return  criterial;
+    }
     public static String fillStringFromRequestPost (@Context HttpServletRequest req) throws IOException {
         req.getParameterMap();
         StringBuilder stringBuilder = new StringBuilder();

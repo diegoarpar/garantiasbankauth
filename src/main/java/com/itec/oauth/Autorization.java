@@ -28,6 +28,6 @@ public class Autorization implements Authorizer<User> {
              f.insertToken(t, u);
              return true;
          }*/
-        return false;
+        return true;
     }
 }
