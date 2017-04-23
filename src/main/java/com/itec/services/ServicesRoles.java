@@ -30,8 +30,8 @@ public class ServicesRoles {
     private  String postString="";
 
     @GET
-    @Produces("application/json")
-    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("ADMIN")
     public List<DBObject> get(@Context HttpServletRequest req)  {
         List<DBObject> roles = new ArrayList<>();
         criterial=UTILS.fillCriterialFromString(req.getQueryString(),criterial);
@@ -51,12 +51,35 @@ public class ServicesRoles {
         return roles;
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("ADMIN")
+    @Path("/outToken")
+    public List<DBObject> getOutToken(@Context HttpServletRequest req)  {
+        criterial=UTILS.fillCriterialFromString(req.getQueryString(),criterial);
+        criterial=UTILS.getTenant(req,criterial);
+
+        return f.get(criterial,UTILS.COLLECTION_ROLE);
+    }
     @POST
-    @Produces("application/json")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
     @RolesAllowed("ADMIN")
     public String insert(@Context HttpServletRequest req) throws IOException {
         postString= UTILS.fillStringFromRequestPost(req);
         criterialList=UTILS.fillCriterialListFromDBOBject((BasicDBList) JSON.parse(postString.toString()),criterial, criterialList);
+        if(criterialList.size()>0) {
+            DBObject objetToFind= (DBObject) JSON.parse(criterialList.get(0).get("json").toString());
+            HashMap objectToDelete = new HashMap();
+            HashMap objectToFind= new HashMap();
+            objectToFind.put("user",objetToFind.get("user"));
+            objectToFind = UTILS.getTenant(req, objectToFind);
+            for (DBObject o : f.get(objectToFind,UTILS.COLLECTION_ROLE)) {
+                objectToDelete = UTILS.getTenant(req, objectToDelete);
+                objectToDelete.put("json",o);
+                f.delete(objectToDelete, UTILS.COLLECTION_ROLE);
+            }
+        }
         for(HashMap o : criterialList){
             o=UTILS.getTenant(req,o);
             f.insert(o, UTILS.COLLECTION_ROLE);

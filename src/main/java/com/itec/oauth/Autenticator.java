@@ -36,6 +36,8 @@ public class Autenticator implements Authenticator<String, User>{
             token=autorization.split(",")[0];
             criterial.put("token",token);
         }
+        if(token==null){return Optional.absent(); }
+        if(token.length()<10){return Optional.absent(); }
 
        if (fm.get(criterial, UTILS.COLLECTION_TOKEN).size()>0) {
 

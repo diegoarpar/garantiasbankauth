@@ -34,6 +34,7 @@ public class ServicesToken {
     @GET
     @Produces("application/json")
     @PermitAll
+    @RolesAllowed("ADMIN,USER")
     public Boolean get( @Context HttpServletRequest req)  {
         //criterial=UTILS.fillCriterialFromString(req.getQueryString(),criterial);
         //criterial=UTILS.getTenant(req,criterial);

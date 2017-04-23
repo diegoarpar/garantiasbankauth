@@ -72,17 +72,16 @@ public class FactoryMongo {
     public void insert(HashMap c, String collection) {
         dbP.insert(getCollection(collection,c), curs, mongoClient, c);
     }
+    public void delete(HashMap c, String collection) {
+        dbP.remove(getCollection(collection,c), curs, mongoClient, c);
+    }
     public List<DBObject> getAll(HashMap c, String collection) {
         return dbP.getAll(getCollection(collection,c), curs, mongoClient, c);
     }
     public List<DBObject> get(HashMap c, String collection) {
         return dbP.get(getCollection(collection,c), curs, mongoClient, c);
     }
-    public String hash256(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        return Hashing.sha256()
-                .hashString(password, Charsets.UTF_8)
-                .toString();
-    }
+
 
 
 }

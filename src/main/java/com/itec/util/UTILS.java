@@ -1,5 +1,7 @@
 package com.itec.util;
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -10,6 +12,7 @@ import javax.ws.rs.core.Context;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -25,11 +28,10 @@ public class UTILS {
     public static final String COLLECTION_ROLE = "roles";
     public static final String COLLECTION_PERMISSION = "permission";
 
-    public static byte[] hash256D(String password) throws NoSuchAlgorithmException {
-        MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-        byte[] passBytes = password.getBytes();
-        byte[] passHash = sha256.digest(passBytes);
-        return passHash;
+    public static String hash256(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        return Hashing.sha256()
+                .hashString(password, Charsets.UTF_8)
+                .toString();
     }
     public static ArrayList<HashMap<String, DBObject>> fillCriterialListFromDBOBject(BasicDBList dbList, HashMap criterial, ArrayList<HashMap<String, DBObject>> criterialList){
         criterialList.clear();
