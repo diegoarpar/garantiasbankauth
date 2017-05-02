@@ -33,11 +33,13 @@ public class ServicesTenant {
 
     @GET
     @Produces("application/json")
-    @PermitAll
+
     public List<DBObject> get(@Context HttpServletRequest req)  {
         criterial.clear();
-        criterial.put("origin", new BasicDBObject().append("origin",((Request) req).getHttpFields().get("origin")));
-        return f.get(criterial,UTILS.COLLECTION_TOKEN);
+        criterial=UTILS.fillCriterialFromString(req.getQueryString(),criterial);
+        System.out.println(criterial.toString());
+        //criterial.put("origin", new BasicDBObject().append("origin",((Request) req).getHttpFields().get("host")));
+        return f.get(criterial,UTILS.COLLECTION_TENANT);
     }
 
     @POST
