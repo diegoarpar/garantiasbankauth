@@ -28,7 +28,7 @@ public class autentication extends  Application<ConfigurationExample>{
      public static void main (String[] args)  throws Exception{
          if(args.length > 0) new autentication().run(args);
          else {
-             new autentication().run(new String[] { "server","./src/main/java/com/itec/autentication/config.yml" });
+             new autentication().run(new String[] { "server","./src/main/java/com/itec/autentication/configAuth.yml" });
          }
     }
     
