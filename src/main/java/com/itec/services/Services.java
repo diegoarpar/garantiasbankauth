@@ -4,6 +4,7 @@
  */
 package com.itec.services;
 
+import com.itec.configuration.ConfigurationAutentication;
 import com.itec.db.FactoryMongo;
 import com.itec.pojo.Token;
 import com.itec.pojo.User;
@@ -33,7 +34,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/autentication/users")
 @Produces(MediaType.APPLICATION_JSON)
 public class Services {
-    FactoryMongo fm = new FactoryMongo();
+    FactoryMongo fm = ConfigurationAutentication.getFactoryMongo();
     HashMap<String, String> criterial= new HashMap<>();
 
     @POST

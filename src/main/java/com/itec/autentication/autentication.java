@@ -5,7 +5,7 @@
  */
 package com.itec.autentication;
 
-import com.itec.configuration.ConfigurationExample;
+import com.itec.configuration.ConfigurationAutentication;
 import com.itec.oauth.Autenticator;
 import com.itec.oauth.Autorization;
 import com.itec.pojo.User;
@@ -24,7 +24,7 @@ import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
  *
  * @author iTech-Pc
  */
-public class autentication extends  Application<ConfigurationExample>{
+public class autentication extends  Application<ConfigurationAutentication>{
      public static void main (String[] args)  throws Exception{
          if(args.length > 0) new autentication().run(args);
          else {
@@ -34,7 +34,7 @@ public class autentication extends  Application<ConfigurationExample>{
     
 
      @Override
-    public void run(ConfigurationExample t, Environment e) throws Exception {
+    public void run(ConfigurationAutentication t, Environment e) throws Exception {
             t.getTemplate();
             t.getDefaultName();
         FilterRegistration.Dynamic filter = e.servlets().addFilter("CORSFilter", CrossOriginFilter.class);

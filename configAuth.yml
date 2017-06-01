@@ -1,5 +1,8 @@
 template: Hello, %s!
-
+databaseuser: certiusers
+databasepass: certi123
+databasename: usersdb
+databasurlserver: localhost
 
 defaultName: ${DW_DEFAULT_NAME:-Stranger}
 
@@ -30,7 +33,7 @@ server:
 #  hardNofileLimit: 1000
   applicationConnectors:
     - type: http
-      port: 8079
+      port: 2022
   #  - type: https
   #    port: 8443
  #     keyStorePath: example.keystore
@@ -44,7 +47,7 @@ server:
 #      validateCerts: false
   adminConnectors:
     - type: http
-      port: 8082
+      port: 2023
  #   - type: https
  #     port: 8444
 #      keyStorePath: example.keystore
@@ -82,6 +85,3 @@ logging:
 #      timeZone: UTC
  #     maxFileSize: 10MB
 
-# the key needs to match the suffix of the renderer
-
----

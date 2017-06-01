@@ -5,20 +5,11 @@
  */
 package com.itec.db;
 
-import com.google.common.base.Charsets;
-import com.google.common.hash.Hashing;
-import com.itec.configuration.ConfigurationExample;
-import com.itec.util.UTILS;
+import com.itec.configuration.ConfigurationAutentication;
 import com.mongodb.*;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
-import com.itec.pojo.User;
-import com.itec.pojo.Token;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 /**
  *
@@ -37,9 +28,7 @@ public class FactoryMongo {
     }
 
     public MongoClient getMongoClient(String user, String pass, String url, String dataBase) {
-        if (mongoClient == null) {
-            mongoClient = new MongoClient(new MongoClientURI("mongodb://" + user + ":" + pass + "@" + url + ":27017/?authSource=" + dataBase + "&authMechanism=MONGODB-CR"));
-        }
+        mongoClient=ConfigurationAutentication.getMongoClient(user,pass,url,dataBase               );
         return mongoClient;
     }
 
@@ -66,7 +55,7 @@ public class FactoryMongo {
             collection=collection+"_"+tenant;
         }
 
-        return getCollection(collection, ConfigurationExample.DATABASE_USER,ConfigurationExample.DATABASE_PASS,ConfigurationExample.DATABASE_SERVER_URL,ConfigurationExample.DATABASE_NAME);
+        return getCollection(collection, ConfigurationAutentication.DATABASE_USER, ConfigurationAutentication.DATABASE_PASS, ConfigurationAutentication.DATABASE_SERVER_URL, ConfigurationAutentication.DATABASE_NAME);
     }
 
     public void insert(HashMap c, String collection) {

@@ -1,5 +1,6 @@
 package com.itec.services;
 
+import com.itec.configuration.ConfigurationAutentication;
 import com.itec.db.FactoryMongo;
 import com.itec.util.UTILS;
 import com.mongodb.BasicDBList;
@@ -24,7 +25,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class ServicesRoles {
 
-    private FactoryMongo f = new FactoryMongo();
+    private FactoryMongo f = ConfigurationAutentication.getFactoryMongo();
     private HashMap criterial= new HashMap<>();
     private ArrayList<HashMap<String, DBObject>> criterialList= new ArrayList<>();
     private  String postString="";

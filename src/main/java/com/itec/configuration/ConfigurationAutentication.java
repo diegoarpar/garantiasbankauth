@@ -4,11 +4,15 @@
  */
 package com.itec.configuration;
 
+import com.itec.db.FactoryMongo;
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class ConfigurationExample extends Configuration {
+public class ConfigurationAutentication extends Configuration {
     public static String DATABASE_NAME="";
     public static String DATABASE_USER="";
     public static String DATABASE_PASS="";
@@ -94,4 +98,22 @@ public class ConfigurationExample extends Configuration {
         return databasurlserver;
     }
 
+    private static MongoClient mongoClient = null;
+    private  static FactoryMongo factoryMongo= new FactoryMongo();
+
+    public static  FactoryMongo getFactoryMongo () {
+        if(factoryMongo==null){
+            factoryMongo= new FactoryMongo();
+        }
+        return factoryMongo;}
+    public static MongoClient getMongoClient(String user, String pass, String url, String dataBase) {
+        if (mongoClient == null ) {
+            mongoClient = new MongoClient(new MongoClientURI("mongodb://" + user + ":" + pass + "@" + url + ":27017/?authSource=" + dataBase + "&authMechanism=MONGODB-CR"));
+        }else if (mongoClient.isLocked()){
+            mongoClient = new MongoClient(new MongoClientURI("mongodb://" + user + ":" + pass + "@" + url + ":27017/?authSource=" + dataBase + "&authMechanism=MONGODB-CR"));
+
+        }
+
+        return mongoClient;
+    }
 }
