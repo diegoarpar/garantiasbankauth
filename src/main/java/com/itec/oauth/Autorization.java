@@ -5,6 +5,7 @@
  */
 package com.itec.oauth;
 
+import com.itec.configuration.ConfigurationAutentication;
 import com.itec.db.FactoryMongo;
 import com.itec.pojo.Token;
 import com.itec.pojo.User;
@@ -24,7 +25,7 @@ import java.util.UUID;
  * @author iTech-Pc
  */
 public class Autorization implements Authorizer<User> {
-   FactoryMongo f = new FactoryMongo();
+   FactoryMongo f = ConfigurationAutentication.getFactoryMongo();
     HashMap<String, String> criterial = new HashMap<>();
     @Override
     public boolean authorize(User u, String role) {

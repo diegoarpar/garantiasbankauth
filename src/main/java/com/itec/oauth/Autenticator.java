@@ -6,6 +6,7 @@
 package com.itec.oauth;
 
 import com.google.common.base.Optional;
+import com.itec.configuration.ConfigurationAutentication;
 import com.itec.db.FactoryMongo;
 import com.itec.pojo.Token;
 import com.itec.pojo.User;
@@ -20,7 +21,7 @@ import java.util.HashMap;
  * @author iTech-Pc
  */
 public class Autenticator implements Authenticator<String, User>{
-    FactoryMongo fm = new FactoryMongo();
+    private FactoryMongo fm =  ConfigurationAutentication.getFactoryMongo();
     HashMap<String, String> criterial = new HashMap<>();
     @Override
     public Optional<User> authenticate(String autorization) throws AuthenticationException {
