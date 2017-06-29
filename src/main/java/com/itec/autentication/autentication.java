@@ -18,6 +18,8 @@ import java.util.EnumSet;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.glassfish.jersey.message.GZipEncoder;
+import org.glassfish.jersey.server.filter.EncodingFilter;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 /**
@@ -41,7 +43,7 @@ public class autentication extends  Application<ConfigurationAutentication>{
                                     filter.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, e.getApplicationContext().getContextPath() + "*");
                                     filter.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "GET,PUT,POST,DELETE,OPTIONS");
                                     filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
-                                    filter.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "Origin, Content-Type, Accept, Authorization, Date");
+                                    filter.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "Origin, Content-Type, Accept, Authorization, Date,Accept-Encoding");
                                     filter.setInitParameter(CrossOriginFilter.ALLOW_CREDENTIALS_PARAM, "true");
          e.jersey().register(new AuthDynamicFeature(
                  new OAuthCredentialAuthFilter.Builder<User>()
@@ -52,18 +54,14 @@ public class autentication extends  Application<ConfigurationAutentication>{
 
          e.jersey().register(RolesAllowedDynamicFeature.class);
 
-        final Services db = new Services();
-        final ServicesPermissions p = new ServicesPermissions();
-        final ServicesTenant te = new ServicesTenant();
-        final ServicesToken k = new ServicesToken();
-        final ServicesUsers u = new ServicesUsers();
-        final ServicesRoles r = new ServicesRoles();
-        e.jersey().register(db);
-        e.jersey().register(te);
-        e.jersey().register(k);
-        e.jersey().register(u);
-        e.jersey().register(p);
-        e.jersey().register(r);
+        e.jersey().register(Services.class);
+        e.jersey().register(ServicesTenant.class);
+        e.jersey().register(ServicesToken.class);
+        e.jersey().register(ServicesUsers.class);
+        e.jersey().register(ServicesPermissions.class);
+        e.jersey().register(ServicesRoles.class);
+         e.jersey().register(GZipEncoder.class);
+         e.jersey().register(EncodingFilter.class);
 
         
 
