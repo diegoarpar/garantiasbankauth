@@ -26,9 +26,10 @@ import java.util.UUID;
  */
 public class Autorization implements Authorizer<User> {
    FactoryMongo f = ConfigurationAutentication.getFactoryMongo();
-    HashMap<String, String> criterial = new HashMap<>();
+
     @Override
     public boolean authorize(User u, String role) {
+        HashMap<String, String> criterial = new HashMap<>();
         String [] rolesToSearch =role.split(",");         String autorization=u.getAutoization();         String tenant="";         String token="";        List<DBObject> roles = new ArrayList<>();
         criterial.clear();
         int length=autorization.split(",").length;
@@ -46,10 +47,14 @@ public class Autorization implements Authorizer<User> {
         for(int i=0;i<rolesToSearch.length;i++){
             for(int j=0;j<roles.size();j++){
                 if(rolesToSearch[i].equals(roles.get(j).get("rol").toString())){
+                    criterial=null;
+                    rolesToSearch=null;
                     return true;
                 }
             }
         }
+        rolesToSearch=null;
+        criterial=null;
         return false;
     }
 }

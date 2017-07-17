@@ -22,9 +22,10 @@ import java.util.HashMap;
  */
 public class Autenticator implements Authenticator<String, User>{
     private FactoryMongo fm =  ConfigurationAutentication.getFactoryMongo();
-    HashMap<String, String> criterial = new HashMap<>();
+
     @Override
     public Optional<User> authenticate(String autorization) throws AuthenticationException {
+        HashMap<String, String> criterial = new HashMap<>();
         String token="";
         String tenant="";
         criterial.clear();
@@ -43,9 +44,11 @@ public class Autenticator implements Authenticator<String, User>{
        if (fm.get(criterial, UTILS.COLLECTION_TOKEN).size()>0) {
 
             Response.status(Response.Status.ACCEPTED);
+           criterial=null;
             return Optional.of(new User("diego",autorization,"123"));
         }
         Response.status(Response.Status.BAD_REQUEST);
+        criterial=null;
         return Optional.absent();
     }   
 }
