@@ -18,32 +18,27 @@ import java.util.List;
 public class FactoryMongo {
 
 
-    private MongoClient mongoClient = null;
+    /*private MongoClient mongoClient = null;
     private DB database = null;
     private DBCursor curs;
+*/
 
-    DBMongo dbP = new DBMongo();
 
     public FactoryMongo() {
     }
 
-    public MongoClient getMongoClient(String user, String pass, String url, String dataBase) {
-        mongoClient=ConfigurationAutentication.getMongoClient(user,pass,url,dataBase               );
-        return mongoClient;
+    public MongoClient getMongoClient() {
+        return ConfigurationAutentication.getMongoClient(ConfigurationAutentication.DATABASE_USER, ConfigurationAutentication.DATABASE_PASS, ConfigurationAutentication.DATABASE_SERVER_URL, ConfigurationAutentication.DATABASE_NAME);
     }
 
-    public DB getDatabase(String dataBase) {
-        database = mongoClient.getDB(dataBase);
-        return database;
+    public DB getDatabase() {
+
+        return getMongoClient().getDB(ConfigurationAutentication.DATABASE_NAME);
     }
 
 
-    public DBCollection getCollection(String name, String user, String pass, String url, String dataBase) {
-        getMongoClient(user, pass, url, dataBase);
-        getDatabase(dataBase);
-
-
-        return database.getCollection(name);
+    public DBCollection getCollection(String name) {
+        return getDatabase().getCollection(name);
     }
 
     public DBCollection getCollection(String collection,HashMap c){
@@ -55,20 +50,21 @@ public class FactoryMongo {
             collection=collection+"_"+tenant;
         }
 
-        return getCollection(collection, ConfigurationAutentication.DATABASE_USER, ConfigurationAutentication.DATABASE_PASS, ConfigurationAutentication.DATABASE_SERVER_URL, ConfigurationAutentication.DATABASE_NAME);
+        return getCollection(collection);
     }
 
     public void insert(HashMap c, String collection) {
-        dbP.insert(getCollection(collection,c), curs, mongoClient, c);
+        ConfigurationAutentication.dbm.insert(getCollection(collection,c),  getMongoClient(), c);
     }
     public void delete(HashMap c, String collection) {
-        dbP.remove(getCollection(collection,c), curs, mongoClient, c);
+        ConfigurationAutentication.dbm.remove(getCollection(collection,c),  getMongoClient(), c);
     }
     public List<DBObject> getAll(HashMap c, String collection) {
-        return dbP.getAll(getCollection(collection,c), curs, mongoClient, c);
+        DBMongo dbP = new DBMongo();
+        return dbP.getAll(getCollection(collection,c),  getMongoClient(), c);
     }
     public List<DBObject> get(HashMap c, String collection) {
-        return dbP.get(getCollection(collection,c), curs, mongoClient, c);
+        return ConfigurationAutentication.dbm.get(getCollection(collection,c),  getMongoClient(), c);
     }
 
 

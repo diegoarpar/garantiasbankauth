@@ -19,7 +19,7 @@ import java.util.*;
  */
 
 public class DBMongo {
-    public String insert(DBCollection collection,DBCursor curs,MongoClient mongoClient, User c){
+    public String insert(DBCollection collection,MongoClient mongoClient, User c){
 
         BasicDBObject object = new BasicDBObject();
         object.append("user",c.getUser());
@@ -29,7 +29,7 @@ public class DBMongo {
 
     return "Insertado";
     }
-    public String insertToken(DBCollection collection,DBCursor curs,MongoClient mongoClient, Token c){
+    public String insertToken(DBCollection collection,MongoClient mongoClient, Token c){
 
         BasicDBObject object = new BasicDBObject();
         object.append("user",c.getUser().getUser());
@@ -41,13 +41,14 @@ public class DBMongo {
 
         return "Insertado";
     }
-    public String updateUser(DBCollection collection,DBCursor curs,MongoClient mongoClient, String  c){
+    public String updateUser(DBCollection collection,MongoClient mongoClient, String  c){
         BasicDBObject object = (BasicDBObject)JSON.parse(c);
         BasicDBObject searchQuery2  = new BasicDBObject().append("_id",object.get("_id"));
         collection.update(searchQuery2,object);
     return "actualizado";
     }
-    public List<DBObject> getCriterial(DBCollection collection,DBCursor curs,MongoClient mongoClient, HashMap criterial){
+    public List<DBObject> getCriterial(DBCollection collection,MongoClient mongoClient, HashMap criterial){
+        DBCursor curs;
         List<DBObject> data= new ArrayList<>();
         BasicDBObject searchQuery2  = new BasicDBObject();
         Iterator it = criterial.entrySet().iterator();
@@ -66,7 +67,7 @@ public class DBMongo {
 
 
 
-    public void insertCiterial(DBCollection collection,DBCursor curs,MongoClient mongoClient, HashMap criterial){
+    public void insertCiterial(DBCollection collection, MongoClient mongoClient, HashMap criterial){
 
         BasicDBObject searchQuery2  = new BasicDBObject();
         Iterator it = criterial.entrySet().iterator();
@@ -79,7 +80,7 @@ public class DBMongo {
     }
 
 
-    public void insert(DBCollection collection,DBCursor curs,MongoClient mongoClient, HashMap criterial){
+    public void insert(DBCollection collection,MongoClient mongoClient, HashMap criterial){
         BasicDBObject searchQuery2  = new BasicDBObject();
         Iterator it = criterial.entrySet().iterator();
         while (it.hasNext()) {
@@ -90,7 +91,7 @@ public class DBMongo {
         collection.insert(searchQuery2);
 
     }
-    public void update(DBCollection collection,DBCursor curs,MongoClient mongoClient, HashMap criterial){
+    public void update(DBCollection collection,MongoClient mongoClient, HashMap criterial){
         BasicDBObject _id  = new BasicDBObject();
         BasicDBObject searchQuery2  = new BasicDBObject();
         Iterator it = criterial.entrySet().iterator();
@@ -105,7 +106,7 @@ public class DBMongo {
         collection.update(new BasicDBObject("_id", o),searchQuery2);
 
     }
-    public String remove(DBCollection collection,DBCursor curs,MongoClient mongoClient, HashMap criterial){
+    public String remove(DBCollection collection,MongoClient mongoClient, HashMap criterial){
 
         List<DBObject> data= new ArrayList<>();
         BasicDBObject searchQuery2  = new BasicDBObject();
@@ -125,7 +126,8 @@ public class DBMongo {
         return "eliminado";
     }
 
-    public List<DBObject> get(DBCollection collection,DBCursor curs,MongoClient mongoClient, HashMap criterial){
+    public List<DBObject> get(DBCollection collection,MongoClient mongoClient, HashMap criterial){
+        DBCursor curs;
         List<DBObject> data= new ArrayList<>();
         BasicDBObject searchQuery2  = new BasicDBObject();
         Iterator it = criterial.entrySet().iterator();
@@ -149,7 +151,8 @@ public class DBMongo {
         }
         return data;
     }
-    public List<DBObject> getAll(DBCollection collection,DBCursor curs,MongoClient mongoClient, HashMap criterial){
+    public List<DBObject> getAll(DBCollection collection,MongoClient mongoClient, HashMap criterial){
+        DBCursor curs;
         List<DBObject> data= new ArrayList<>();
 
         curs=collection.find();
