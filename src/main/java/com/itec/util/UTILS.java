@@ -27,6 +27,7 @@ public class UTILS {
     public static final String COLLECTION_USER = "users";
     public static final String COLLECTION_ROLE = "roles";
     public static final String COLLECTION_PERMISSION = "permission";
+    public static final String COLLECTION_PAPARAMETRIC = "parametric";
 
     public static String hash256(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         return Hashing.sha256()

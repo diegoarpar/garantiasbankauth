@@ -45,6 +45,7 @@ public class autentication extends  Application<ConfigurationAutentication>{
                                     filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
                                     filter.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "Origin, Content-Type, Accept, Authorization, Date,Accept-Encoding");
                                     filter.setInitParameter(CrossOriginFilter.ALLOW_CREDENTIALS_PARAM, "true");
+
          e.jersey().register(new AuthDynamicFeature(
                  new OAuthCredentialAuthFilter.Builder<User>()
                          .setAuthenticator(new Autenticator())
@@ -52,7 +53,7 @@ public class autentication extends  Application<ConfigurationAutentication>{
                          .setPrefix("Bearer")
                          .buildAuthFilter()));
 
-         e.jersey().register(RolesAllowedDynamicFeature.class);
+        e.jersey().register(RolesAllowedDynamicFeature.class);
 
         e.jersey().register(Services.class);
         e.jersey().register(ServicesTenant.class);
@@ -60,8 +61,9 @@ public class autentication extends  Application<ConfigurationAutentication>{
         e.jersey().register(ServicesUsers.class);
         e.jersey().register(ServicesPermissions.class);
         e.jersey().register(ServicesRoles.class);
-         e.jersey().register(GZipEncoder.class);
-         e.jersey().register(EncodingFilter.class);
+        e.jersey().register(ServicesParametricos.class);
+        e.jersey().register(GZipEncoder.class);
+        e.jersey().register(EncodingFilter.class);
 
         
 

@@ -2,12 +2,15 @@ package com.itec.services;
 
 import com.itec.configuration.ConfigurationAutentication;
 import com.itec.db.FactoryMongo;
+import com.itec.pojo.Token;
+import com.itec.pojo.User;
 import com.itec.util.UTILS;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -17,13 +20,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by iTech on 17/04/2017.
  */
-@Path("/autentication/permission")
+@Path("/autentication/parametric")
 @Produces(MediaType.APPLICATION_JSON)
-public class ServicesPermissions {
+public class ServicesParametricos {
 
     private FactoryMongo f = ConfigurationAutentication.getFactoryMongo();
     private HashMap criterial= new HashMap<>();
@@ -32,22 +36,34 @@ public class ServicesPermissions {
 
     @GET
     @Produces("application/json")
-    @RolesAllowed("ADMIN,USER")
+    @PermitAll
     public List<DBObject> get( @Context HttpServletRequest req)  {
         criterial=UTILS.fillCriterialFromString(req.getQueryString(),criterial);
         criterial=UTILS.getTenant(req,criterial);
-        return f.get(criterial,UTILS.COLLECTION_PERMISSION);
+        return f.get(criterial,UTILS.COLLECTION_PAPARAMETRIC);
+
+    }
+
+
+    @GET
+    @Produces("application/json")
+    @Path("/getAll")
+    @RolesAllowed("ADMIN")
+    public List<DBObject> getAll(@Context HttpServletRequest req)  {
+        criterial=UTILS.getTenant(req,criterial);
+        return f.getAll(criterial,UTILS.COLLECTION_PAPARAMETRIC);
     }
 
     @POST
-    @Produces("application/json")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
     @RolesAllowed("ADMIN")
     public String insert(@Context HttpServletRequest req) throws IOException {
         postString= UTILS.fillStringFromRequestPost(req);
         criterialList=UTILS.fillCriterialListFromDBOBject((BasicDBList) JSON.parse(postString.toString()),criterial, criterialList);
         for(HashMap o : criterialList){
             o=UTILS.getTenant(req,o);
-            f.insert(o, UTILS.COLLECTION_PERMISSION);
+            f.insert(o, UTILS.COLLECTION_PAPARAMETRIC);
         }
         return  "FIRMANDO";
     }
@@ -55,20 +71,11 @@ public class ServicesPermissions {
     @Produces("application/json")
     @RolesAllowed("ADMIN")
     public String update(@Context HttpServletRequest req) throws IOException  {
-        criterial.clear();
         postString=UTILS.fillStringFromRequestPost(req);
         criterialList=UTILS.fillCriterialListFromDBOBject((BasicDBList) JSON.parse(postString.toString()),criterial, criterialList);
-        String user="";
-        if(criterialList.size()>0) {
-            user = (String)((BasicDBObject)(criterialList.get(0).get("json"))).get("user");
-
-            criterial.put("user", new BasicDBObject().append("user",user));
-            criterial=UTILS.getTenant(req,criterial);
-            f.delete(criterial,UTILS.COLLECTION_PERMISSION);
-            for (HashMap o : criterialList) {
-                o=UTILS.getTenant(req,o);
-                f.insert(o, UTILS.COLLECTION_PERMISSION);
-            }
+        for(HashMap o : criterialList){
+            o=UTILS.getTenant(req,o);
+            //f.insert(o, UTILS.COLLECTION_TOKEN);
         }
         return  "FIRMANDO";
     }
@@ -78,14 +85,5 @@ public class ServicesPermissions {
     public String delete(@Context HttpServletRequest req,@PathParam("id") String id)throws IOException   {
         postString=UTILS.fillStringFromRequestPost(req);
         return  "FIRMANDO";
-    }
-    @GET
-    @Produces("application/json")
-    @Path("/getByUser")
-    @RolesAllowed("ADMIN,USER")
-    public List<DBObject> getByUser(@Context HttpServletRequest req)  {
-        criterial=UTILS.fillCriterialFromString(req.getQueryString(),criterial);
-
-        return f.get(criterial,UTILS.COLLECTION_PERMISSION);
     }
 }
