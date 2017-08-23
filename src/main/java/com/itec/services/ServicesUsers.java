@@ -47,13 +47,13 @@ public class ServicesUsers {
     @GET
     @Produces("application/json")
     @Path("/logIn")
-    public Token LogIn(@QueryParam("user") String user, @QueryParam("pass") String pass, @QueryParam("tenant") String tenant)  {
+    public Token LogIn(@Context HttpServletRequest req,@QueryParam("user") String user, @QueryParam("pass") String pass, @QueryParam("tenant") String tenant)  {
         Token t = new Token();
         User u = new User ();
         criterial.clear();
         criterial.put("user",user);
         criterial.put("pass",pass);
-        criterial.put("tenant",tenant);
+        criterial=UTILS.getTenant(req,criterial);
         if(f.get(criterial,UTILS.COLLECTION_USER).size()>0){
             String token = UUID.randomUUID().toString();
             t.setToken(token);
@@ -61,7 +61,8 @@ public class ServicesUsers {
             temp.put("user",user);
             temp.put("token",token);
             criterial.clear();
-            criterial.put("tenant",tenant);
+            UTILS.getTenant(req,criterial);
+            temp.put("tenant",criterial.get("tenant"));
             criterial.put("json",temp);
             f.insert(criterial,UTILS.COLLECTION_TOKEN);
             t.setUser(u);
