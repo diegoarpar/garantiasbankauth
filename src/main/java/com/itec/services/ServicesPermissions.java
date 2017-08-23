@@ -58,13 +58,17 @@ public class ServicesPermissions {
         criterial.clear();
         postString=UTILS.fillStringFromRequestPost(req);
         criterialList=UTILS.fillCriterialListFromDBOBject((BasicDBList) JSON.parse(postString.toString()),criterial, criterialList);
-        String user="";
+        UTILS.getToken(req,criterial);
+        UTILS.getTenant(req,criterial);
+        BasicDBObject obj = (BasicDBObject) f.get(criterial,UTILS.COLLECTION_TOKEN).get(0);
+        String user= (String) obj.get("user");
+        criterial.clear();
+        criterial.put("json", new BasicDBObject().append("user",user));
+        criterial=UTILS.getTenant(req,criterial);
+        f.delete(criterial,UTILS.COLLECTION_PERMISSION);
+        criterial.clear();
         if(criterialList.size()>0) {
             user = (String)((BasicDBObject)(criterialList.get(0).get("json"))).get("user");
-
-            criterial.put("user", new BasicDBObject().append("user",user));
-            criterial=UTILS.getTenant(req,criterial);
-            f.delete(criterial,UTILS.COLLECTION_PERMISSION);
             for (HashMap o : criterialList) {
                 o=UTILS.getTenant(req,o);
                 f.insert(o, UTILS.COLLECTION_PERMISSION);
@@ -74,7 +78,7 @@ public class ServicesPermissions {
     }
     @DELETE
     @Produces("application/json")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed({"ADMIN"})
     public String delete(@Context HttpServletRequest req,@PathParam("id") String id)throws IOException   {
         postString=UTILS.fillStringFromRequestPost(req);
         return  "FIRMANDO";
