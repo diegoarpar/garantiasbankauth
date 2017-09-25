@@ -48,7 +48,7 @@ server:
   adminConnectors:
     - type: http
       port: 2023
- #   - type: https
+ #   - type: https–
  #     port: 8444
 #      keyStorePath: example.keystore
 #      keyStorePassword: example
