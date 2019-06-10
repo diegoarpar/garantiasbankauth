@@ -7,6 +7,7 @@ import com.itec.pojo.User;
 import com.itec.util.UTILS;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
@@ -54,12 +55,15 @@ public class ServicesUsers {
         criterial.put("user",user);
         criterial.put("pass",pass);
         criterial=UTILS.getTenant(req,criterial);
-        if(f.get(criterial,UTILS.COLLECTION_USER).size()>0){
+        List<DBObject> result = f.get(criterial,UTILS.COLLECTION_USER);
+        if(result.size()>0){
             String token = UUID.randomUUID().toString();
             t.setToken(token);
             DBObject temp = new BasicDBObject();
             temp.put("user",user);
             temp.put("token",token);
+            if(result.get(0).get("email")!=null)
+            temp.put("email", result.get(0).get("email").toString());
             criterial.clear();
             UTILS.getTenant(req,criterial);
             temp.put("tenant",criterial.get("tenant"));
