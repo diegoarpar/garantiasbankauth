@@ -1,0 +1,5 @@
+FROM openjdk:8
+COPY ./target/Autentication-1.0-SNAPSHOT.jar app.jar
+COPY configAuth.yml config.yml
+WORKDIR /
+CMD ["java", "-jar", "app.jar", "server", "config.yml"]
