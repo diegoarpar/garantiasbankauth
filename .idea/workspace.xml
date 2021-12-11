@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="764a1cad-1b56-430f-9ed1-439959c63f3d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DockerfileGarantiasBankBack" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose-gar-back.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/itec/autentication/autentication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/itec/oauth/Autenticator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/itec/oauth/Autorization.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/itec/pojo/Token.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/itec/pojo/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/endorsed/javaee-endorsed-api-6.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-    </list>
+    <list default="true" id="764a1cad-1b56-430f-9ed1-439959c63f3d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,6 +24,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -56,7 +42,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1639249301571</updated>
-      <workItem from="1639249303568" duration="1000000" />
+      <workItem from="1639249303568" duration="1331000" />
     </task>
     <servers />
   </component>
