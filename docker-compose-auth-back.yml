@@ -1,8 +1,15 @@
 version: "3.9"
 services:
-  web:
+  auth-services:
+    container_name: auth-services
     build:
       context: .
       dockerfile: DockerfileAuthBack
     ports:
       - "2022:2022"
+    networks:
+      - db
+networks:
+  db:
+    external:
+      name: db_default
