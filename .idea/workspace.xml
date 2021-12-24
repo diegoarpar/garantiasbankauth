@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="764a1cad-1b56-430f-9ed1-439959c63f3d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configAuth.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configAuth.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/docker-compose-db.yml" beforeDir="false" afterPath="$PROJECT_DIR$/db/docker-compose-db.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-auth-back.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-auth-back.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +46,10 @@
       <option name="presentableId" value="Default" />
       <updated>1639249301571</updated>
       <workItem from="1639249303568" duration="7920000" />
+      <workItem from="1639396689930" duration="76000" />
+      <workItem from="1639856449784" duration="1047000" />
+      <workItem from="1639873439747" duration="591000" />
+      <workItem from="1640360966075" duration="749000" />
     </task>
     <servers />
   </component>
@@ -64,5 +66,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
